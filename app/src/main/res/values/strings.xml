@@ -6,5 +6,9 @@
     <string name="second_fragment_label">Create New Report</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="parent_view">parent view</string>
+    <string name="take_a_photo">Take A Photo</string>
+    <string name="save">Save</string>
+    <string name="descripcion_del_incidente">descripcion del incidente</string>
 
 </resources>
