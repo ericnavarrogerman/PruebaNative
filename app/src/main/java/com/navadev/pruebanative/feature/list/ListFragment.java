@@ -1,4 +1,4 @@
-package com.navadev.pruebanative;
+package com.navadev.pruebanative.feature.list;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.navadev.pruebanative.R;
 import com.navadev.pruebanative.databinding.FragmentListBinding;
 
 

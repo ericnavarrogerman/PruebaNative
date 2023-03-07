@@ -1,4 +1,4 @@
-package com.navadev.pruebanative;
+package com.navadev.pruebanative.feature.add;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/ListFragment"
-        android:name="com.navadev.pruebanative.ListFragment"
+        android:name="com.navadev.pruebanative.feature.list.ListFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_list">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/AddFragment"
-        android:name="com.navadev.pruebanative.AddFragment"
+        android:name="com.navadev.pruebanative.feature.add.AddFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_add">
 
