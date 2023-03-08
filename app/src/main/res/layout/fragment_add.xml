@@ -7,6 +7,9 @@
 
 
     <data>
+        <variable
+            name="viewModel"
+            type="com.navadev.pruebanative.feature.add.presenter.AddViewModel" />
 
     </data>
 
@@ -23,68 +26,80 @@
             android:padding="12dp">
 
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtFecha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="18dp"
-                android:text="fecha" />
+                app:updateText="@{viewModel.fecha}" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtHora"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="18dp"
-                android:text="hora" />
+                app:updateText="@{viewModel.hora}" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="18dp"
-                android:text="colombia" />
+                android:text="Ciudad: Barranquilla, Colombia" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtSecuence"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="18dp"
-                android:text="00001" />
+                app:updateText="@{viewModel.nextId}" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/editDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:afterTextChanged="@{viewModel::validateText}"
+                android:contentDescription="@string/descripcion_del_incidente"
                 android:gravity="top"
+                android:hint="Escriba aqui la descripcion"
                 android:inputType="textMultiLine"
                 android:lines="4"
-                android:contentDescription="@string/descripcion_del_incidente"
+                app:stateBackground="@{viewModel.descriptionIsValid}"
                 android:padding="18dp" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
                 <CheckBox
                     android:id="@+id/checkImageIsPresent"
                     android:layout_width="50dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    app:setCheckedBolean="@{viewModel.haveImage}"
+                    android:clickable="false" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnTakeAPhoto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/material_dynamic_primary90"
                     android:padding="18dp"
+                    android:onClick="@{ view -> viewModel.takeAPhoto() }"
                     android:text="@string/take_a_photo" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/design_default_color_error"
+                android:onClick="@{ view -> viewModel.crearIncidente(txtLocation.getText().toString(),editDescription.getText().toString())}"
                 android:padding="18dp"
-                android:text="@string/save" />
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
