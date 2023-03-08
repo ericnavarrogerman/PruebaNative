@@ -36,7 +36,7 @@ public class IncidenteDaoImpl implements IncidenteDao {
     @Override
     public boolean update(Incidente entidad) {
         ContentValues values = new ContentValues();
-        values.put("fecha", entidad.getFecha().toString());
+        values.put("fecha", entidad.getFecha());
         values.put("ubicacion", entidad.getUbicacion());
         values.put("descripcion", entidad.getDescripcion());
         values.put("foto_path", entidad.getFoto());
@@ -64,7 +64,6 @@ public class IncidenteDaoImpl implements IncidenteDao {
         String[] projection = {
                 "id",
                 "fecha",
-                "hora",
                 "ubicacion",
                 "descripcion",
                 "foto_path"
@@ -94,5 +93,24 @@ public class IncidenteDaoImpl implements IncidenteDao {
         cursor.close();
         return lista;
     }
+    @Override
+    public int getNextAvailableId() {
+        int siguienteId = 1;
+
+        Cursor cursor = db.rawQuery("SELECT MAX(id) FROM incidente", null);
+        if (cursor.moveToFirst()) {
+            siguienteId = cursor.getInt(0) + 1;
+        }
+
+        cursor.close();
+        return siguienteId;
+    }
+
+    @Override
+    public boolean deleteAll() {
+        int result = db.delete("incidente", null, null);
+        return (result > 0);
+    }
+
 
 }

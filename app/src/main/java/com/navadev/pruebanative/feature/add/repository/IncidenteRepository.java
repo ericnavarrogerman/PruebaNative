@@ -10,5 +10,6 @@ public interface IncidenteRepository  {
     boolean insert(Incidente entidad);
     boolean update(Incidente entidad);
     boolean delete(Incidente entidad);
+    int getNextAvailableId();
 }
 

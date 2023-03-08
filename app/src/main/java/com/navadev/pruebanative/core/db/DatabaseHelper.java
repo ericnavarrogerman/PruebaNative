@@ -13,7 +13,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "id INTEGER PRIMARY KEY AUTOINCREMENT," +
             "fecha TEXT," +
             "ubicacion TEXT," +
-            "numero_incidente TEXT," +
             "descripcion TEXT," +
             "foto_path TEXT)";
 

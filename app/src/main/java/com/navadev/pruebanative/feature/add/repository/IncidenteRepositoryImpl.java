@@ -32,5 +32,6 @@ public class IncidenteRepositoryImpl implements IncidenteRepository {
     public List<Incidente> getAll() {
         return dao.getAll();
     }
-}
+
+    public int getNextAvailableId(){return dao.getNextAvailableId();}}
 

@@ -15,4 +15,8 @@ public interface IncidenteDao {
 
     List<Incidente> getAll();
 
+    int getNextAvailableId();
+
+    boolean deleteAll();
+
 }
