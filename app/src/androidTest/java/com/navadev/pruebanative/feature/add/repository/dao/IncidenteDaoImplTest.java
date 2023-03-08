@@ -9,8 +9,8 @@ import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.navadev.pruebanative.feature.add.model.Incidente;
-import com.navadev.pruebanative.feature.add.repository.dao.IncidenteDao;
-import com.navadev.pruebanative.feature.add.repository.dao.IncidenteDaoImpl;
+import com.navadev.pruebanative.core.repository.dao.IncidenteDao;
+import com.navadev.pruebanative.core.repository.dao.IncidenteDaoImpl;
 
 import org.junit.After;
 import org.junit.Before;

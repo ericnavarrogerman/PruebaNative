@@ -33,10 +33,6 @@ public class AddFragment extends Fragment {
 
     private FragmentAddBinding binding;
 
-    public AddViewModel getViewModel() {
-        return viewModel;
-    }
-
     private AddViewModel viewModel;
 
     private String currentPhotoPath;

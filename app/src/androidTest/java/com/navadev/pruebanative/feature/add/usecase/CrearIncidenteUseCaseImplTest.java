@@ -5,9 +5,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.navadev.pruebanative.feature.add.model.Incidente;
-import com.navadev.pruebanative.feature.add.repository.IncidenteRepository;
-import com.navadev.pruebanative.feature.add.usecase.CrearIncidenteUseCase;
-import com.navadev.pruebanative.feature.add.usecase.CrearIncidenteUseCaseImpl;
+import com.navadev.pruebanative.core.repository.IncidenteRepository;
 
 import org.junit.Before;
 import org.junit.Test;

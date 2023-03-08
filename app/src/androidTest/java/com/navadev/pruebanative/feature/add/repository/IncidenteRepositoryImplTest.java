@@ -6,9 +6,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.navadev.pruebanative.feature.add.model.Incidente;
-import com.navadev.pruebanative.feature.add.repository.IncidenteRepository;
-import com.navadev.pruebanative.feature.add.repository.IncidenteRepositoryImpl;
-import com.navadev.pruebanative.feature.add.repository.dao.IncidenteDao;
+import com.navadev.pruebanative.core.repository.IncidenteRepository;
+import com.navadev.pruebanative.core.repository.IncidenteRepositoryImpl;
+import com.navadev.pruebanative.core.repository.dao.IncidenteDao;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -1,22 +1,15 @@
-package com.navadev.pruebanative.feature.add.repository.dao;
+package com.navadev.pruebanative.core.repository;
 
 import com.navadev.pruebanative.feature.add.model.Incidente;
 
 import java.util.List;
 
-public interface IncidenteDao {
-
-
-    boolean insert(Incidente entidad);
-
-    boolean update(Incidente entidad);
-
-    boolean delete(Incidente entidad);
+public interface IncidenteRepository  {
 
     List<Incidente> getAll();
-
+    boolean insert(Incidente entidad);
+    boolean update(Incidente entidad);
+    boolean delete(Incidente entidad);
     int getNextAvailableId();
-
-    boolean deleteAll();
-
 }
+

@@ -1,6 +1,6 @@
 package com.navadev.pruebanative.feature.add.usecase;
 
-import com.navadev.pruebanative.feature.add.repository.IncidenteRepository;
+import com.navadev.pruebanative.core.repository.IncidenteRepository;
 
 public class GetNextAvaliableIdImpl implements GetNextAvailableId {
 

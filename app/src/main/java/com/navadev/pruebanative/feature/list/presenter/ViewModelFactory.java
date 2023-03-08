@@ -1,4 +1,4 @@
-package com.navadev.pruebanative.feature.add.presenter;
+package com.navadev.pruebanative.feature.list.presenter;
 
 import android.content.Context;
 
@@ -9,28 +9,24 @@ import com.navadev.pruebanative.core.repository.IncidenteRepository;
 import com.navadev.pruebanative.core.repository.IncidenteRepositoryImpl;
 import com.navadev.pruebanative.core.repository.dao.IncidenteDao;
 import com.navadev.pruebanative.core.repository.dao.IncidenteDaoImpl;
-import com.navadev.pruebanative.feature.add.usecase.CrearIncidenteUseCase;
-import com.navadev.pruebanative.feature.add.usecase.CrearIncidenteUseCaseImpl;
-import com.navadev.pruebanative.feature.add.usecase.GetNextAvailableId;
-import com.navadev.pruebanative.feature.add.usecase.GetNextAvaliableIdImpl;
+import com.navadev.pruebanative.feature.list.usecase.GetAllIncidentesUseCaseImpl;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
-   IncidenteDao dao;
+    IncidenteDao dao;
 
     public ViewModelFactory(Context context) {
-       this.dao = new IncidenteDaoImpl(context);
+        this.dao = new IncidenteDaoImpl(context);
     }
 
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(AddViewModel.class)) {
+        if (modelClass.isAssignableFrom(ListViewmodel.class)) {
 
             IncidenteRepository repository = new IncidenteRepositoryImpl(dao);
-            CrearIncidenteUseCase useCaseCreate = new CrearIncidenteUseCaseImpl(repository);
-            GetNextAvailableId  getNextAvailableId = new GetNextAvaliableIdImpl(repository);
+            GetAllIncidentesUseCaseImpl useCaseCreate = new GetAllIncidentesUseCaseImpl(repository);
 
-            return (T) new AddViewModel(useCaseCreate,getNextAvailableId);
+            return (T) new ListViewmodel(useCaseCreate);
         }
         throw new IllegalArgumentException("Unknown ViewModel class");
     }

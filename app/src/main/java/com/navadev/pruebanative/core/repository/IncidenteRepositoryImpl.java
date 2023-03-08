@@ -1,7 +1,7 @@
-package com.navadev.pruebanative.feature.add.repository;
+package com.navadev.pruebanative.core.repository;
 
 import com.navadev.pruebanative.feature.add.model.Incidente;
-import com.navadev.pruebanative.feature.add.repository.dao.IncidenteDao;
+import com.navadev.pruebanative.core.repository.dao.IncidenteDao;
 
 import java.util.List;
 

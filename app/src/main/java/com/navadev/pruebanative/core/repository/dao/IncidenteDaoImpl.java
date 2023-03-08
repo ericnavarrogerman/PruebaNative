@@ -1,4 +1,4 @@
-package com.navadev.pruebanative.feature.add.repository.dao;
+package com.navadev.pruebanative.core.repository.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
