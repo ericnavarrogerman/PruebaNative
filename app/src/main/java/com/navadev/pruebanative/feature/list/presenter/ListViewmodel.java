@@ -41,6 +41,8 @@ public class ListViewmodel extends ViewModel {
     public void getAllIncidentes(){
 
         disposable = Observable.fromCallable(() -> {
+                    //para que se alcance a mostrar el dialogo
+                    Thread.sleep(1000);
                     return getAllIncidentes.execute();
                 })
                 .subscribeOn(Schedulers.io())

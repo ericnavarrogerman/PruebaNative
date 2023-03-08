@@ -1,5 +1,7 @@
 package com.navadev.pruebanative.feature.list.adapter;
 
+import static com.navadev.pruebanative.core.utils.Utils.getImageFileUri;
+
 import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.navadev.pruebanative.R;
 import com.navadev.pruebanative.feature.add.model.Incidente;
 
@@ -84,19 +87,18 @@ public class IncidenteAdapter extends RecyclerView.Adapter<IncidenteAdapter.Inci
             textViewCiudad.setText(incidente.getUbicacion());
             textDescripcion.setText(incidente.getDescripcion());
             textId.setText("Id: "+incidente.getId());
-            imageView.setImageURI(getImageFileUri(incidente.getFoto()));
 
+            Glide.with(itemView.getContext())
+                    .load(getImageFileUri(incidente.getFoto()))
+                    .into(imageView);
+            
 
             itemView.setOnClickListener(v -> listener.onItemClick(incidente));
         }
     }
 
 
-    private static Uri getImageFileUri(String currentPhotoPath) {
-        File imageFile = new File( currentPhotoPath);
-        Uri imageUri = Uri.fromFile(imageFile);
-        return imageUri;
-    }
+
 
 
     public interface OnItemCLick{

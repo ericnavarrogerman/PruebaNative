@@ -15,6 +15,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.navadev.pruebanative.R;
+import com.navadev.pruebanative.core.utils.DialogModel;
+import com.navadev.pruebanative.core.utils.Utils;
 import com.navadev.pruebanative.databinding.FragmentListBinding;
 import com.navadev.pruebanative.feature.add.model.Incidente;
 import com.navadev.pruebanative.feature.list.adapter.IncidenteAdapter;
@@ -28,6 +30,8 @@ public class ListFragment extends Fragment {
 
     private ListViewmodel viewModel;
 
+    private Utils utils;
+
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
@@ -35,25 +39,22 @@ public class ListFragment extends Fragment {
     ) {
 
         binding = FragmentListBinding.inflate(inflater, container, false);
-
+        utils = new Utils(requireActivity());
 
         ViewModelFactory factory = new ViewModelFactory( requireContext());
         viewModel = new ViewModelProvider(this, factory).get(ListViewmodel.class);
 
-
-        ProgressDialog progressDialog = new ProgressDialog(requireContext());
-        progressDialog.setMessage("Cargando...");
 
         viewModel.statusView.observe(requireActivity(),status->{
 
             switch (status){
 
                 case None:
-                    progressDialog.dismiss();
+                    utils.showProgressDialog(false);
                     break;
 
                 case InProgress:
-                    progressDialog.show();
+                    utils.showProgressDialog(true);
                     break ;
 
                 case ErrorToSave:
@@ -68,11 +69,10 @@ public class ListFragment extends Fragment {
         IncidenteAdapter adapter = new IncidenteAdapter();
         adapter.setListener(incidente -> {
 
+            utils.showImage(incidente);
         });
 
-        viewModel.incidentes.observe(getViewLifecycleOwner(),list->{
-            adapter.setData(list);
-        });
+        viewModel.incidentes.observe(getViewLifecycleOwner(), adapter::setData);
 
 
         binding.lista.setAdapter(adapter);
@@ -84,21 +84,11 @@ public class ListFragment extends Fragment {
 
 
     public void showError(){
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setMessage("No se pudieron obtener los datos. Ocurrió un error inesperado.");
-        builder.setPositiveButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                dialogInterface.dismiss();
-            }
-        });
-        builder.setCancelable(false);
-        AlertDialog errorDialog = builder.create();
-
-
-        errorDialog.show();
+        DialogModel model = new DialogModel();
+        model.title = "Error getting data";
+        model.description = "An unexpected error occurred while getting the data";
+        model.btnAceptar = "Closed";
+        utils.showTextDialog(model);
 
     }
 

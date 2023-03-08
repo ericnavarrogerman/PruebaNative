@@ -105,6 +105,8 @@ public class AddViewModel extends ViewModel {
 
 
         disposable = Observable.fromCallable(() -> {
+                    //para que se alcance a mostrar el dialogo
+                    Thread.sleep(1000);
                     return crearIncidenteUseCase.execute(incidente);
                 })
                 .subscribeOn(Schedulers.io())

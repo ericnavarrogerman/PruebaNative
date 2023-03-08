@@ -20,6 +20,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import com.navadev.pruebanative.R;
+import com.navadev.pruebanative.core.utils.DialogButtonClickListener;
+import com.navadev.pruebanative.core.utils.DialogModel;
+import com.navadev.pruebanative.core.utils.Utils;
 import com.navadev.pruebanative.databinding.FragmentAddBinding;
 import com.navadev.pruebanative.feature.add.presenter.AddViewModel;
 import com.navadev.pruebanative.feature.add.presenter.ViewModelFactory;
@@ -37,6 +40,8 @@ public class AddFragment extends Fragment {
 
     private String currentPhotoPath;
 
+    private Utils utils;
+
 
     @Override
     public View onCreateView(
@@ -45,15 +50,13 @@ public class AddFragment extends Fragment {
     ) {
 
         binding = FragmentAddBinding.inflate(inflater, container, false);
-
+        utils = new Utils(requireActivity());
 
         ViewModelFactory factory = new ViewModelFactory( requireContext());
         viewModel = new ViewModelProvider(this, factory).get(AddViewModel.class);
         binding.setViewModel(viewModel);
 
 
-        ProgressDialog progressDialog = new ProgressDialog(requireContext());
-        progressDialog.setMessage("Cargando...");
 
 
 
@@ -62,11 +65,11 @@ public class AddFragment extends Fragment {
             switch (status){
 
                 case None:
-                    progressDialog.dismiss();
+                    utils.showProgressDialog(false);
                 break;
 
                 case InProgress:
-                   progressDialog.show();
+                    utils.showProgressDialog(true);
                 break ;
 
                 case TakeAPhoto:
@@ -104,30 +107,54 @@ public class AddFragment extends Fragment {
     }
 
     private void showErrorDialog(boolean isPhotoMissing) {
-        String errorMessage = "There is an error in the fields. ";
+        String errorMessage = "";
         if (isPhotoMissing) {
-            errorMessage += "The photo is missing.";
-        } else {
-            errorMessage += "The description is missing.";
+            errorMessage = "The photo is missing.";
+        }else{
+            errorMessage = "The description is missing.";
         }
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Error");
-        builder.setMessage(errorMessage);
-        builder.setPositiveButton("OK", null);
-        builder.show();
+
+        DialogModel model = new DialogModel();
+        model.title = "There is an error in the fields.";
+        model.description = errorMessage ;
+        model.btnAceptar = "OK";
+        utils.showTextDialog(model);
     }
 
     private void showSaveError(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-        builder.setTitle("Error al guardar")
-                .setMessage("Ocurrió un error inesperado y no se pudo guardar")
-                .setPositiveButton("Cerrar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        DialogModel model = new DialogModel();
+        model.title = "Error while saving";
+        model.description = "An unexpected error occurred and could not be saved";
+        model.btnAceptar = "Closed";
+        utils.showTextDialog(model);
+
+    }
+
+    private void showImagePresentDialog() {
+
+        DialogModel model = new DialogModel();
+        model.title = "Image present";
+        model.description = "An image has already been taken. Do you want to take a new one?";
+        model.btnAceptar = "Take new photo";
+        model.btnCancelar = "Delete";
+        model.btnNeutro = "Cancel";
+        model.listener = new DialogButtonClickListener() {
+            @Override
+            public void onPositiveClick() {
+                dispatchTakePictureIntent();
+            }
+
+            @Override
+            public void onNegativeClick() {
+                deleteImageFile();
+            }
+
+            @Override
+            public void onNeutroClick() {
+
+            }
+        };
+        utils.showTextDialog(model);
 
     }
 
@@ -139,7 +166,7 @@ public class AddFragment extends Fragment {
 
                     viewModel.setPhoto(currentPhotoPath);
                 } else {
-
+                    showSaveError();
                 }
             });
 
@@ -177,18 +204,6 @@ public class AddFragment extends Fragment {
         currentPhotoPath = imageFile.getAbsolutePath();
         return imageFile;
     }
-
-
-
-        private void showImagePresentDialog() {
-            AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
-            builder.setTitle("Image present");
-            builder.setMessage("An image has already been taken. Do you want to take a new one?");
-            builder.setPositiveButton("Take new photo", (dialog, which) -> dispatchTakePictureIntent());
-            builder.setNegativeButton("Delete", (dialog, which)->deleteImageFile());
-            builder.setNeutralButton("Cancel", (dialog, which)-> dialog.dismiss());
-            builder.show();
-        }
 
     private void deleteImageFile() {
         File imageFile = new File(currentPhotoPath);
